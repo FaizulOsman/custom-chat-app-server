@@ -5,8 +5,9 @@ import { User } from "./user.model";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
 import { UserSearchableFields } from "./user.constants";
-import { JwtPayload } from "jsonwebtoken";
 import { paginationHelpers } from "../../../helpers/paginationHelper";
+import ApiError from "../../../errors/ApiError";
+import httpStatus from "http-status";
 
 const getAllUsers = async (
   filters: IUserFilter,
@@ -67,11 +68,17 @@ const getSingleUser = async (id: string): Promise<IUser | null> => {
 };
 
 const getMyProfile = async (
-  payload: JwtPayload | null
-): Promise<IUser | null> => {
+  verifiedUser: any
+): Promise<IUser[] | null | any> => {
   let result = null;
 
-  result = await User.findById({ _id: payload?.id });
+  if (verifiedUser) {
+    result = await User.find({ _id: verifiedUser.id });
+
+    if (!result.length) {
+      throw new ApiError(httpStatus.NOT_FOUND, "No data found!");
+    }
+  }
 
   return result;
 };
