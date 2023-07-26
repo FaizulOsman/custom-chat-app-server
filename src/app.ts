@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("🔥Welcome to book schema!🔥");
+  res.send("🔥Welcome to Custom Chat App!🔥");
   next();
 });
 
