@@ -73,9 +73,9 @@ const getMyProfile = async (
   let result = null;
 
   if (verifiedUser) {
-    result = await User.find({ _id: verifiedUser.id });
+    result = await User.findOne({ _id: verifiedUser.id });
 
-    if (!result.length) {
+    if (!result) {
       throw new ApiError(httpStatus.NOT_FOUND, "No data found!");
     }
   }

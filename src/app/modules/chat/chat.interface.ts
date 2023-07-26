@@ -3,7 +3,8 @@ import { Model } from "mongoose";
 export type IChat = {
   content: string;
   sender: string;
-  email: string;
+  myEmail: string;
+  userEmail: string;
   name: string;
   time: string;
 };

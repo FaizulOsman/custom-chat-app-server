@@ -5,6 +5,9 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import { IChat } from "./chat.interface";
+import { jwtHelpers } from "../../../helpers/jwtHelpers";
+import config from "../../../config";
+import { Secret } from "jsonwebtoken";
 
 // Create Chat
 const createChat: RequestHandler = catchAsync(
@@ -28,7 +31,14 @@ const getChatByEmail: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { email } = req.query;
     const e: any = email;
-    const result = await ChatService.getChatByEmail(e);
+
+    const token: any = req.headers.authorization;
+    const verifiedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.secret as Secret
+    );
+
+    const result = await ChatService.getChatByEmail(e, verifiedUser);
 
     // Send Response
     sendResponse<IChat[] | null>(res, {

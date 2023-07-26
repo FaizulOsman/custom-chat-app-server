@@ -4,7 +4,8 @@ const createChatZodValidation = z.object({
   body: z.object({
     content: z.string(),
     sender: z.string(),
-    email: z.string(),
+    myEmail: z.string(),
+    userEmail: z.string(),
     name: z.string(),
   }),
 });

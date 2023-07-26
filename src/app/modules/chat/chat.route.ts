@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Routes
 router.post(
-  "/:id",
+  "/",
   validateRequest(ChatValidation.createChatZodValidation),
   ChatController.createChat
 );

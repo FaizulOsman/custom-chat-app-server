@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
+import { User } from "../user/user.model";
 import { IChat } from "./chat.interface";
 import { Chat } from "./chat.model";
 
@@ -18,14 +19,31 @@ const createChat = async (payload: IChat): Promise<IChat | null> => {
   payload.time = formattedTime;
 
   const result = await Chat.create(payload);
+  console.log(result);
   return result;
 };
 
 // Get Single Chat
-const getChatByEmail = async (email: string): Promise<IChat[] | null> => {
-  const result = await Chat.find({ email });
-  console.log(result);
-  return result;
+const getChatByEmail = async (
+  email: string,
+  verifiedUser: any
+): Promise<IChat[] | null> => {
+  const myProfile = await User.findOne({ _id: verifiedUser?.id });
+
+  const result1 = await Chat.find({
+    $and: [{ myEmail: myProfile?.email }, { userEmail: email }],
+  });
+
+  const result2 = await Chat.find({
+    $and: [{ myEmail: email }, { userEmail: myProfile?.email }],
+  });
+
+  const result: any = [...result1, ...result2];
+  const sortedResultAsc = result.sort(
+    (a: any, b: any) => a?.createdAt?.getTime() - b?.createdAt?.getTime()
+  );
+
+  return sortedResultAsc;
 };
 
 export const ChatService = {
