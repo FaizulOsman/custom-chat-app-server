@@ -7,6 +7,7 @@ export type IChat = {
   userEmail: string;
   name: string;
   time: string;
+  reaction?: number;
 };
 
 // Chat Model

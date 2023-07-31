@@ -10,6 +10,7 @@ const ChatSchema = new Schema<IChat, ChatModel>(
     userEmail: { type: String, required: [true, "userEmail is missing!"] },
     name: { type: String, required: [true, "name is missing!"] },
     time: { type: String, required: [true, "time is missing!"] },
+    reaction: { type: Number, required: [false, "reaction is missing!"] },
   },
   {
     timestamps: true,

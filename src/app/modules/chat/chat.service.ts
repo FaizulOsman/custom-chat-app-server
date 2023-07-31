@@ -23,6 +23,14 @@ const createChat = async (payload: IChat): Promise<IChat | null> => {
   return result;
 };
 
+// Update Chat
+const updateChat = async (id: any, payload: IChat): Promise<IChat | null> => {
+  // const data = await Chat.findById({ _id: id });
+  const result = await Chat.findByIdAndUpdate({ _id: id }, payload);
+  console.log(result);
+  return result;
+};
+
 // Get Single Chat
 const getChatByEmail = async (
   email: string,
@@ -48,5 +56,6 @@ const getChatByEmail = async (
 
 export const ChatService = {
   createChat,
+  updateChat,
   getChatByEmail,
 };

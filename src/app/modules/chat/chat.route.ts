@@ -11,6 +11,8 @@ router.post(
   ChatController.createChat
 );
 
+router.patch("/:id", ChatController.updateChat);
+
 router.get("/", ChatController.getChatByEmail);
 
 export const ChatRoutes = router;

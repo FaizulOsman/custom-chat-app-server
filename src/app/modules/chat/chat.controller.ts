@@ -26,6 +26,24 @@ const createChat: RequestHandler = catchAsync(
   }
 );
 
+// Update Chat
+const updateChat: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+    const { ...chatData } = req.body;
+
+    const result = await ChatService.updateChat(id, chatData);
+
+    // Send Response
+    sendResponse<IChat>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Chat Updated Successfully",
+      data: result,
+    });
+  }
+);
+
 // Get single Chat by id
 const getChatByEmail: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -52,5 +70,6 @@ const getChatByEmail: RequestHandler = catchAsync(
 
 export const ChatController = {
   createChat,
+  updateChat,
   getChatByEmail,
 };
