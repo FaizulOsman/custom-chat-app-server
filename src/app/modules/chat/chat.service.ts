@@ -17,7 +17,7 @@ const createChat = async (payload: IChat): Promise<IChat | null> => {
   const formattedTime = `${formattedHours}:${formattedMinutes} ${meridiem}`;
 
   payload.time = formattedTime;
-
+  console.log(payload);
   const result = await Chat.create(payload);
   console.log(result);
   return result;
@@ -25,9 +25,18 @@ const createChat = async (payload: IChat): Promise<IChat | null> => {
 
 // Update Chat
 const updateChat = async (id: any, payload: IChat): Promise<IChat | null> => {
-  // const data = await Chat.findById({ _id: id });
   const result = await Chat.findByIdAndUpdate({ _id: id }, payload);
   console.log(result);
+  return result;
+};
+
+// Delete Chat
+const deleteChat = async (
+  id: any,
+  verifiedUser: any
+): Promise<IChat | null> => {
+  const result = await Chat.findByIdAndDelete({ _id: id });
+  console.log(id, verifiedUser);
   return result;
 };
 
@@ -57,5 +66,6 @@ const getChatByEmail = async (
 export const ChatService = {
   createChat,
   updateChat,
+  deleteChat,
   getChatByEmail,
 };

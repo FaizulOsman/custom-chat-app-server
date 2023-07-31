@@ -13,7 +13,6 @@ import { Secret } from "jsonwebtoken";
 const createChat: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { ...chatData } = req.body;
-
     const result = await ChatService.createChat(chatData);
 
     // Send Response
@@ -39,6 +38,28 @@ const updateChat: RequestHandler = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: "Chat Updated Successfully",
+      data: result,
+    });
+  }
+);
+
+// Delete Chat
+const deleteChat: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req?.params?.id;
+    const token: any = req.headers.authorization;
+    const verifiedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.secret as Secret
+    );
+
+    const result = await ChatService.deleteChat(id, verifiedUser);
+
+    // Send Response
+    sendResponse<IChat>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Chat Deleted Successfully",
       data: result,
     });
   }
@@ -71,5 +92,6 @@ const getChatByEmail: RequestHandler = catchAsync(
 export const ChatController = {
   createChat,
   updateChat,
+  deleteChat,
   getChatByEmail,
 };

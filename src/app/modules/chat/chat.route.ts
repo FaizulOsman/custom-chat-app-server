@@ -13,6 +13,8 @@ router.post(
 
 router.patch("/:id", ChatController.updateChat);
 
+router.delete("/:id", ChatController.deleteChat);
+
 router.get("/", ChatController.getChatByEmail);
 
 export const ChatRoutes = router;
