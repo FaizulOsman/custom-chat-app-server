@@ -21,7 +21,7 @@ const getAllUser: RequestHandler = catchAsync(
     sendResponse<IUser[]>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "users retrived successfully",
+      message: "Users retrieved successfully",
       meta: result.meta,
       data: result.data,
     });
@@ -36,7 +36,7 @@ const getSingleUser: RequestHandler = catchAsync(
     sendResponse<IUser>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "user retrived successfully",
+      message: "User retrieved successfully",
       data: result,
     });
   }
